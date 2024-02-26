@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import Contact from "./components/Contact/Contact";
@@ -11,6 +12,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./GlobalStyle";
 import Account from "./components/Account/Account";
 import Error from "./components/Error/Error";
+import Context from "./Context";
 
 const App = () => {
   const theme = {
@@ -38,22 +40,26 @@ const App = () => {
     },
   };
 
+  const [context, setContext] = useState({ cart: [] });
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <GlobalStyle />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
-        <Newsletter />
-        <Footer />
+        <Context.Provider value={{ context, setContext }}>
+          <GlobalStyle />
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+          <Newsletter />
+          <Footer />
+        </Context.Provider>
       </BrowserRouter>
     </ThemeProvider>
   );

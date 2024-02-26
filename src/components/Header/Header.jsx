@@ -6,9 +6,12 @@ import styled from "styled-components";
 import { BsHandbagFill } from "react-icons/bs";
 import { useState } from "react";
 import Cart from "../Cart/Cart";
+import Context from "../../Context";
+import { useContext } from "react";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
+  const { context } = useContext(Context);
 
   return (
     <MainHeader>
@@ -21,7 +24,7 @@ const Header = () => {
         <Navbar />
         <span className="cart-icon" onClick={() => setShowCart(true)}>
           <BsHandbagFill className="bag" />
-          <span>6</span>
+          <span>{context.cart.length || 0}</span>
         </span>
         {showCart && <Cart setShowCart={setShowCart} />}
       </div>

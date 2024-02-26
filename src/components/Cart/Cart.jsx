@@ -1,8 +1,29 @@
+import React, { useContext, useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import styled from "styled-components";
 import CartItem from "./CartItem";
+import Context from "../../Context";
+
+function parseCurrency(number) {
+  return number.toLocaleString("en-IN", {
+    style: "currency",
+    currency: "INR",
+  });
+}
 
 const Cart = ({ setShowCart }) => {
+  const { context } = useContext(Context);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    for (let i = 0; i < context.cart.length; i++) {
+      total += context.cart[i].price * context.cart[i].quantity;
+    }
+
+    setTotal(total);
+  }, [context]);
+
   return (
     <Wrapper>
       <div className="cart-panel">
@@ -19,7 +40,7 @@ const Cart = ({ setShowCart }) => {
           <div className="cart-footer">
             <div className="subtotal">
               <div className="text">Subtotal:</div>
-              <div className="text total">₹2,374</div>
+              <div className="text total">{parseCurrency(total)}</div>
             </div>
             <div className="button">
               <button className="checkout-cta">Checkout</button>

@@ -1,66 +1,79 @@
+import React, { useContext } from "react";
 import { MdClose } from "react-icons/md";
 import styled from "styled-components";
+import Context from "../../Context";
+
+const CartProduct = ({ id, imgsrc, pname, price, quantity }) => {
+  const { context, setContext } = useContext(Context);
+
+  const updateQuantity = (type) => {
+    if (type === "forward") {
+      for (let i = 0; i < context.cart.length; i++) {
+        if (context.cart[i].id === id) {
+          let updatedCart = context.cart;
+          updatedCart[i].quantity++;
+          setContext({ ...context, cart: updatedCart });
+          return;
+        }
+      }
+    } else if (type === "backward") {
+      for (let i = 0; i < context.cart.length; i++) {
+        if (context.cart[i].id === id) {
+          let updatedCart = context.cart;
+          updatedCart[i].quantity--;
+          if (updatedCart[i].quantity === 0) {
+            updatedCart.splice(i, 1);
+          }
+          setContext({ ...context, cart: updatedCart });
+          return;
+        }
+      }
+    }
+  };
+
+  const removeItem = () => {
+    let updatedCart = context.cart.filter((item) => item.id !== id);
+    setContext({ ...context, cart: updatedCart });
+  };
+
+  return (
+    <div className="cart-product">
+      <div className="img-container">
+        <img src={imgsrc} alt="" />
+      </div>
+      <div className="prod-details">
+        <span className="name">{pname}</span>
+        <MdClose className="close-btn" onClick={removeItem} />
+        <div className="quantity-buttons">
+          <span onClick={() => updateQuantity("backward")}>-</span>
+          <span>{quantity}</span>
+          <span onClick={() => updateQuantity("forward")}>+</span>
+        </div>
+        <div className="text">
+          <span>{quantity}</span>
+          <span>x</span>
+          <span className="highlight">₹{price}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const CartItem = () => {
+  const { context } = useContext(Context);
+
   return (
     <Wrapper>
       <div className="cart-products">
-        <div className="cart-product">
-          <div className="img-container">
-            <img src="/images/pizza1-img.jpg" alt="" />
-          </div>
-          <div className="prod-details">
-            <span className="name">Margherita</span>
-            <MdClose className="close-btn" />
-            <div className="quantity-buttons">
-              <span>-</span>
-              <span>3</span>
-              <span>+</span>
-            </div>
-            <div className="text">
-              <span>3</span>
-              <span>x</span>
-              <span className="highlight">₹399</span>
-            </div>
-          </div>
-        </div>
-        <div className="cart-product">
-          <div className="img-container">
-            <img src="images/burger3-img.jpg" alt="" />
-          </div>
-          <div className="prod-details">
-            <span className="name">Vegan Burger</span>
-            <MdClose className="close-btn" />
-            <div className="quantity-buttons">
-              <span>-</span>
-              <span>2</span>
-              <span>+</span>
-            </div>
-            <div className="text">
-              <span>2</span>
-              <span>x</span>
-              <span className="highlight">₹249</span>
-            </div>
-          </div>
-        </div>
-        <div className="cart-product">
-          <div className="img-container">
-            <img src="/images/pizza4-img.jpg/" alt="" />
-          </div>
-          <div className="prod-details">
-            <span className="name">Original Prosciutto</span>
-            <MdClose className="close-btn" />
-            <div className="quantity-buttons">
-              <span>-</span>
-              <span>1</span>
-              <span>+</span>
-            </div>
-            <div className="text">
-              <span>1</span>
-              <span>x</span>
-              <span className="highlight">₹679</span>
-            </div>
-          </div>
-        </div>
+        {context.cart.length > 0 ? (
+          <>
+            {context.cart.map((item, index) => (
+              <CartProduct key={index} {...item} />
+            ))}
+          </>
+        ) : (
+          <p>No items in cart</p>
+        )}
       </div>
     </Wrapper>
   );

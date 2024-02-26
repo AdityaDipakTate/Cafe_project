@@ -14,8 +14,9 @@ const Menu = ({ innerPage }) => {
       <div className="container">
         <div className="products-container">
           <div className="products">
-            {Mdata.map((menu) => (
+            {Mdata.map((menu, index) => (
               <Menuitems
+                key={index}
                 id={menu.id}
                 imgsrc={menu.imgsrc}
                 pname={menu.pname}

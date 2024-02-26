@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { BsPlusCircleFill } from "react-icons/bs";
+import Context from "../../Context";
 
 const Menuitems = (props) => {
+  const { context, setContext } = useContext(Context);
   return (
     <Wrapper>
       <div className="product-card">
@@ -19,7 +21,22 @@ const Menuitems = (props) => {
             <span>5</span>
             <span>+</span>
           </div> */}
-          <button className="add-to-cart-button">
+          <button
+            className="add-to-cart-button"
+            onClick={() => {
+              for (let i = 0; i < context.cart.length; i++) {
+                if (context.cart[i].id === props.id) {
+                  return;
+                }
+              }
+              let updatedCart = context.cart;
+              let updatedDetails = { ...props };
+              updatedDetails.quantity = 1;
+              updatedCart.push(updatedDetails);
+
+              setContext({ ...context, cart: updatedCart });
+            }}
+          >
             <BsPlusCircleFill size={15} />
             ADD TO CART
           </button>

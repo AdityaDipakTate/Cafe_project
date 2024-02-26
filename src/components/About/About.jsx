@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../../styles/Button";
-import Tilt from "react-tilt";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
 const About = () => {
@@ -16,15 +15,9 @@ const About = () => {
         <div className="section-inner">
           <div className="section-hero-image">
             <picture>
-              <Tilt className="Tilt">
-                <div className="Tilt-inner">
-                  <img
-                    className="hero-img"
-                    src="/images/about-img.png"
-                    alt=""
-                  />
-                </div>
-              </Tilt>
+              <div className="Tilt-inner">
+                <img className="hero-img" src="/images/about-img.png" alt="" />
+              </div>
             </picture>
           </div>
           <div className="section-hero-data">

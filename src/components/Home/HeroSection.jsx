@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../../styles/Button";
-import Tilt from "react-tilt";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
 const HeroSection = (props) => {
@@ -23,11 +22,9 @@ const HeroSection = (props) => {
           </div>
           <div className="section-hero-image">
             <picture>
-              <Tilt className="Tilt">
-                <div className="Tilt-inner">
-                  <img className="hero-img" src={props.image} alt="" />
-                </div>
-              </Tilt>
+              <div className="Tilt-inner">
+                <img className="hero-img" src={props.image} alt="" />
+              </div>
             </picture>
           </div>
         </div>
@@ -78,11 +75,10 @@ const Wrapper = styled.section`
   }
   picture {
     text-align: center;
-
   }
   .hero-img {
     width: 130%;
-    padding-right:50px
+    padding-right: 50px;
   }
   @media only screen and (min-width: ${({ theme }) => theme.media.tab}) {
     .heading-text {

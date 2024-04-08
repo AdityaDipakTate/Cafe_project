@@ -1,6 +1,10 @@
 import React from "react";
 import { FaLocationArrow, FaMobileAlt, FaEnvelope } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+
+
 
 const Footer = () => {
   return (
@@ -21,15 +25,15 @@ const Footer = () => {
               <div className="title">Contact</div>
               <div className="c-item">
                 <FaLocationArrow />
-                <div className="text">Gurugram, Harayana, India</div>
+                <div className="text">Rahimatpur, Satara, Maharashtra</div>
               </div>
               <div className="c-item">
                 <FaMobileAlt />
-                <div className="text">Phone: 998887776</div>
+                <div className="text">Phone: 8459185677</div>
               </div>
               <div className="c-item">
                 <FaEnvelope />
-                <div className="text">Email: geekyprashant@gmail.com</div>
+                <div className="text">Email: adityatate3@gmail.com</div>
               </div>
             </div>
             <div className="col">
@@ -42,11 +46,11 @@ const Footer = () => {
             </div>
             <div className="col">
               <div className="title">Pages</div>
-              <span className="text">Home</span>
-              <span className="text">About</span>
-              <span className="text">Menu</span>
-              <span className="text">Blog</span>
-              <span className="text">Contact</span>
+             <span className="text"><NavLink to="/" className="text">Home</NavLink></span>
+              <span className="text"><NavLink to="About" className="text">About</NavLink></span>
+              <span className="text"><NavLink to="Menu" className="text">Menu</NavLink></span>
+              <span className="text"><NavLink to="Blog" className="text">Blog</NavLink></span>
+              <span className="text"><NavLink to="Contact" className="text">Contact</NavLink></span>
             </div>
           </div>
         </footer>
@@ -77,7 +81,7 @@ const Wrapper = styled.section`
           font-size: 20px;
         }
         .text {
-          color: rgba(0, 0, 0, 0.5);
+          color: rgba(0, 0, 0, .6);
           font-size: 14px;
         }
         .c-item {

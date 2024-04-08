@@ -52,7 +52,7 @@ const Contact = () => {
 
           <div className="map">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.1375617144654!2d77.09376195045455!3d28.505508696483773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1938456789c7%3A0x45a757aa37e73026!2sAMBIENCE%20MALL%2C%20GURUGRAM!5e0!3m2!1sen!2sin!4v1678786989017!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3803.2089410981043!2d74.19748457458851!3d17.59281039685596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc233920363dff5%3A0xe3be6db4b0c41bd6!2sCafe%20Coffee%20ani%20barach%20kahi...!5e0!3m2!1sen!2sin!4v1709098135092!5m2!1sen!2sin"
               width="90%"
               height="450"
               style={{ border: 0 }}

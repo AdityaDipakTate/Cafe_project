@@ -1,15 +1,51 @@
-import React from "react";
+import React , {useState} from "react";
 import styled from "styled-components";
 import { FiArrowRight } from "react-icons/fi";
 import { useForm } from "react-hook-form";
-
 const Login = (props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();   
+  // const onSubmit = (data) => console.log(data);
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    number: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3001/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+      if (response.ok) {
+        // Registration successful
+        // You can handle success as per your requirement (e.g., show a success message, redirect to login page, etc.)
+        console.log("Registration successful");
+      } else {
+        // Registration failed
+        // You can handle failure as per your requirement (e.g., show an error message)
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
+    console.log(formData)
+  };
+
 
   return (
     <Wrapper>
@@ -21,9 +57,10 @@ const Login = (props) => {
             <form
               id="form"
               className="flex flex-col"
-              onSubmit={handleSubmit(onSubmit)}
+              // onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit}
             >
-              <input
+              {/* <input
                 type="text"
                 {...register("userName", { required: true })}
                 placeholder="Username"
@@ -46,9 +83,39 @@ const Login = (props) => {
                 type="text"
                 placeholder="password"
               />
-              {errors.password && <p>Password is required.</p>}
+              {errors.password && <p>Password is required.</p>} */}
 
-              <button className="btn">
+<input
+              type="text"
+              name="userName"
+              value={formData.userName}
+              onChange={handleChange}
+              placeholder="Username"
+            />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+            />
+            <input
+              type="number"
+              name="number"
+              value={formData.number}
+              onChange={handleChange}
+              placeholder="Mobile Number"
+            />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+            />
+
+
+              <button type="submit" className="btn">
                 Register <FiArrowRight />
               </button>
             </form>

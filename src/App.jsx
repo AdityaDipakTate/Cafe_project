@@ -13,7 +13,7 @@ import { GlobalStyle } from "./GlobalStyle";
 import Account from "./components/Account/Account";
 import Error from "./components/Error/Error";
 import Context from "./Context";
-
+import Test1 from "./components/TestCode/Test1";
 const App = () => {
   const theme = {
     colors: {
@@ -56,6 +56,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/account" element={<Account />} />
             <Route path="*" element={<Error />} />
+            <Route path="/test" element={<Test1/>}/>
           </Routes>
           <Newsletter />
           <Footer />

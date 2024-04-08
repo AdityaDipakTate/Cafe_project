@@ -15,8 +15,8 @@ const Footer = () => {
             <div className="col">
               <div className="title">About</div>
               <div className="text">
-                At Pizzas, we don’t just make pizza. We make people happy.
-                Pizzas was built on the belief that pizza night should be
+                At Virtual - Cafe, we don’t just make pizza. We make people happy.
+                Virtual - Cafe was built on the belief that pizza night should be
                 special, and we carry that belief into everything we do. With
                 more than 15 years of experience under our belts.
               </div>

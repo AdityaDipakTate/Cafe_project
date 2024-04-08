@@ -18,7 +18,7 @@ const Header = () => {
       <div className="header-content">
         <NavLink to="/">
           <div className="logo">
-            <FaPizzaSlice className="logo-icon" /> PIZZAS
+            <FaPizzaSlice className="logo-icon" /> VIRTUAL - CAFE
           </div>
         </NavLink>
         <Navbar />

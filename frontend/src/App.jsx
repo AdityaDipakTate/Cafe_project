@@ -13,6 +13,9 @@ import { GlobalStyle } from "./GlobalStyle";
 import Account from "./components/Account/Account";
 import Error from "./components/Error/Error";
 import Context from "./Context";
+import Admin from "./components/Admin/Admin"
+import Amenu from "./components/Admin/Amenu";
+import Orders from "./components/Admin/Orders";
 const App = () => {
   const theme = {
     colors: {
@@ -55,6 +58,10 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/account" element={<Account />} />
             <Route path="*" element={<Error />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/menu" element={<Amenu />} />
+            <Route path="/admin/orders" element={<Orders />} />
+
           </Routes>
           <Newsletter />
           <Footer />

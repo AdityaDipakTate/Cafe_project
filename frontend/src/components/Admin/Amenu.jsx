@@ -1,65 +1,151 @@
-import React from "react";
-import styled from "styled-components";
+import axios from 'axios';
+import React , {useEffect, useState}from 'react'
 import { FiArrowRight } from "react-icons/fi";
-import { useForm } from "react-hook-form";
+import styled from "styled-components";
 
-const Login = (props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
+async function getData(setter) {
+  
+  const res = await axios.get("http://localhost:3001/getmenu");
+  setter(res.data.menu || []);
+}
+
+const Item = ({name,price,image}) => {
+
+  return (
+    
+      <div className="fooditem">
+<span>{name}</span>
+<span>{price}</span>
+<span placeholder='image link'>{image}
+</span>
+</div>
+    
+  )
+}
+
+const Amenu = () => {
+  const [menuItems, setMenuItems] = useState([]);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    price: 0,
+    image:""
+  });
+
+  const [err,setErr]= useState("");
+
+  useEffect(() => {
+    getData(setMenuItems)
+  }, [])
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErr("Registring...");
+    try {
+      const response = await fetch("http://localhost:3001/addMenuItems", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+      if (response.ok) {
+        // Registration successful
+        // You can handle success as per your requirement (e.g., show a success message, redirect to login page, etc.)
+        console.log("Registration successful");
+        setErr("Registration successfull")
+      } else {
+        // Registration failed
+        // You can handle failure as per your requirement (e.g., show an error message)
+        console.error("Registration failed");
+        setErr("Registration failed")
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      setErr("Something went wrong")
+
+    }
+    console.log(formData)
+  };
 
   return (
     <Wrapper>
-      <div className="container">
-        <div className="register">
-          <div className="col-1">
-            <h2>Login</h2>
-            <span>Login now and enjoy our pizza 🍕</span>
-            <form
+      <h2>Menu</h2>
+      
+      <form
               id="form"
               className="flex flex-col"
-              onSubmit={handleSubmit(onSubmit)}
+              // onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit}
             >
-              <input
-                type="email"
-                {...register("email", { required: true })}
-                placeholder="email"
-              />
-              {errors.email && <p>Email ID is required.</p>}
-              <input
-                {...register("password", { required: true })}
-                type="text"
-                placeholder="password"
-              />
-              {errors.password && <p>Password is required.</p>}
+<input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Item name"
+            />
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+              placeholder="Item price"
+            />
+            <input
+              type="text"
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+              required
+              placeholder="Enter image link"
+            />
+<div className="login-error">
+            {err}
+            </div>
 
-              <button className="btn">
-                Login <FiArrowRight />
+              <button type="submit" className="btn">
+                Add <FiArrowRight />
               </button>
             </form>
-            <div className="register-account">
-              Don't have an account?
-              <button
-                className="register-btn"
-                onClick={() => props.onformSwitch("Register")}
-              >
-                Register
-              </button>
+
+            <div className='show-items'>
+              <span>Name</span>
+              <span>Price</span>
+              <span>Image</span>
+
+              {menuItems.map((item, index) => {
+                return <Item key={index} {...item} />
+              })
+              }
+
             </div>
-          </div>
-          <div className="col-2">
-            <img src="/images/login-img.jpg" alt="" />
-          </div>
-        </div>
-      </div>
-    </Wrapper>
-  );
-};
+
+
+         </Wrapper>
+  )
+}
+
 
 const Wrapper = styled.section`
+
+.show-items{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+}
+.login-error{
+  color:red;
+  text-align:center;
+  font-size:15px
+}
+
   .register {
     max-width: 80rem;
     margin: 6rem auto;
@@ -77,7 +163,7 @@ const Wrapper = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0.6rem 0 4rem;
+    margin: 0.6rem 0 5rem;
     font-size: 1.4rem;
   }
 
@@ -146,11 +232,11 @@ const Wrapper = styled.section`
     h2 {
       font-size: 3rem;
     }
-    .register-account {
+    .login-account {
       color: ${({ theme }) => theme.colors.black};
       font-size: 1.5rem;
       text-align: center;
-      .register-btn {
+      .login-btn {
         border: none;
         outline: none;
         background: transparent;
@@ -206,5 +292,4 @@ const Wrapper = styled.section`
     }
   }
 `;
-
-export default Login;
+export default Amenu

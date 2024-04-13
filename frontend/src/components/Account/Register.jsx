@@ -13,8 +13,12 @@ const Login = (props) => {
     userName: "",
     email: "",
     number: "",
-    password: ""
+    password: "",
+    address:""
   });
+
+  const [err,setErr]= useState("");
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +27,7 @@ const Login = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErr("Registring...");
     try {
       const response = await fetch("http://localhost:3001/register", {
         method: "POST",
@@ -35,13 +40,17 @@ const Login = (props) => {
         // Registration successful
         // You can handle success as per your requirement (e.g., show a success message, redirect to login page, etc.)
         console.log("Registration successful");
+        setErr("Registration successfull")
       } else {
         // Registration failed
         // You can handle failure as per your requirement (e.g., show an error message)
         console.error("Registration failed");
+        setErr("Registration failed")
       }
     } catch (error) {
       console.error("Error during registration:", error);
+      setErr("Something went wrong")
+
     }
     console.log(formData)
   };
@@ -90,6 +99,7 @@ const Login = (props) => {
               name="userName"
               value={formData.userName}
               onChange={handleChange}
+              required
               placeholder="Username"
             />
             <input
@@ -97,6 +107,7 @@ const Login = (props) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              required
               placeholder="Email"
             />
             <input
@@ -104,6 +115,7 @@ const Login = (props) => {
               name="number"
               value={formData.number}
               onChange={handleChange}
+              required
               placeholder="Mobile Number"
             />
             <input
@@ -112,8 +124,22 @@ const Login = (props) => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Password"
+              required
+
             />
 
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="address"
+              required
+            />
+
+<div className="login-error">
+            {err}
+            </div>
 
               <button type="submit" className="btn">
                 Register <FiArrowRight />
@@ -139,6 +165,12 @@ const Login = (props) => {
 };
 
 const Wrapper = styled.section`
+.login-error{
+  color:red;
+  text-align:center;
+  font-size:15px
+}
+
   .register {
     max-width: 80rem;
     margin: 6rem auto;
